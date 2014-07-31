@@ -13,29 +13,38 @@ class ResultsViewController: UIViewController, UISearchBarDelegate,UITableViewDa
     @IBOutlet weak var resultsTable: UITableView!
     
     var endpoint : String?
-    var items : NSArray = []
+    //var items : NSArray = []
     var NC = NetworkController()
-    var results = ["~~ Search for somethin' ~~"]
+    var results = ["Please Search For Something"]
     
-    func setItemsCallback(JSONitems: NSArray) -> Void {
-        self.items = JSONitems
-        self.resultsTable.reloadData()
+//    func setItemsCallback(JSONitems: NSArray) -> Void {
+//        self.items = JSONitems
+//        self.resultsTable.reloadData()
+//    }
+    
+    func parseByType(type: String, JSONreply: NSDictionary) -> Void {
+        self.results = []
+        switch type {
+            case "Search":
+                if let items = JSONreply["items"] as? NSArray {
+                    for item in items{
+                        if let nowItsADictionary = item as? NSDictionary {
+                            if let title = nowItsADictionary["title"] as? String{
+                                self.results.append(title)
+                            }
+                        }
+                    }
+                }
+            default:
+                results = ["Error: No Results Returned"]
+        }
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.resultsTable.reloadData()
+        }
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
-        NC.fetchJSONforSearchByTag(byTag: searchBar.text, callback: setItemsCallback )
-    }
-    
-    @IBAction func searchButton(sender: AnyObject) {
-        //NC.fetchJSONforSearchByTag(byTag: searchBar.text, callback: setItemsCallback)
-        println("searched")
-    }
-    
-    @IBAction func printIt(sender: AnyObject) {
-        //println(self.items)
-        for question in items {
-            println(question["title"])
-        }
+        NC.fetchJSONforItemType("Search", key: searchBar.text,callback: parseByType)
     }
     
     override func viewDidLoad() {
@@ -45,9 +54,7 @@ class ResultsViewController: UIViewController, UISearchBarDelegate,UITableViewDa
     }
 
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 1
+        return results.count
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
