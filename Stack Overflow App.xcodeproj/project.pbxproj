@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA4C874519899FC6009F69FC /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4C874419899FC6009F69FC /* MasterTableViewController.swift */; };
 		FA8C43A91986F49E00037E15 /* SO_Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF4FB31986DE380001BFE1 /* SO_Question.swift */; };
 		FA8C43AA1986F4A200037E15 /* SO_Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF4FB51986DE5E0001BFE1 /* SO_Answer.swift */; };
 		FAABC6B31988329A00A32527 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAABC6B21988329A00A32527 /* NetworkController.swift */; };
 		FAABC6B419883EA900A32527 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAABC6B21988329A00A32527 /* NetworkController.swift */; };
 		FAAF4F951986DCE20001BFE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF4F941986DCE20001BFE1 /* AppDelegate.swift */; };
-		FAAF4F971986DCE20001BFE1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF4F961986DCE20001BFE1 /* ViewController.swift */; };
+		FAAF4F971986DCE20001BFE1 /* ResultslViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF4F961986DCE20001BFE1 /* ResultslViewController.swift */; };
 		FAAF4F9A1986DCE20001BFE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAAF4F981986DCE20001BFE1 /* Main.storyboard */; };
 		FAAF4F9C1986DCE20001BFE1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAAF4F9B1986DCE20001BFE1 /* Images.xcassets */; };
 		FAAF4FA81986DCE20001BFE1 /* Stack_Overflow_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF4FA71986DCE20001BFE1 /* Stack_Overflow_AppTests.swift */; };
@@ -33,11 +34,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA4C874419899FC6009F69FC /* MasterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		FAABC6B21988329A00A32527 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkController.swift; path = "Stack Overflow App/NetworkController.swift"; sourceTree = SOURCE_ROOT; };
 		FAAF4F8F1986DCE20001BFE1 /* Stack Overflow App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stack Overflow App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAAF4F931986DCE20001BFE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAAF4F941986DCE20001BFE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FAAF4F961986DCE20001BFE1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FAAF4F961986DCE20001BFE1 /* ResultslViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultslViewController.swift; sourceTree = "<group>"; };
 		FAAF4F991986DCE20001BFE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FAAF4F9B1986DCE20001BFE1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FAAF4FA11986DCE20001BFE1 /* Stack Overflow AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Stack Overflow AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,8 +90,9 @@
 			isa = PBXGroup;
 			children = (
 				FAAF4F941986DCE20001BFE1 /* AppDelegate.swift */,
-				FAAF4F961986DCE20001BFE1 /* ViewController.swift */,
+				FAAF4F961986DCE20001BFE1 /* ResultslViewController.swift */,
 				FAAF4F981986DCE20001BFE1 /* Main.storyboard */,
+				FA4C874419899FC6009F69FC /* MasterTableViewController.swift */,
 				FAAF4FB11986DE200001BFE1 /* SO_User.swift */,
 				FAAF4FB31986DE380001BFE1 /* SO_Question.swift */,
 				FAAF4FB51986DE5E0001BFE1 /* SO_Answer.swift */,
@@ -224,12 +227,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAAF4F971986DCE20001BFE1 /* ViewController.swift in Sources */,
+				FAAF4F971986DCE20001BFE1 /* ResultslViewController.swift in Sources */,
 				FAAF4FB41986DE380001BFE1 /* SO_Question.swift in Sources */,
 				FAABC6B419883EA900A32527 /* NetworkController.swift in Sources */,
 				FAAF4F951986DCE20001BFE1 /* AppDelegate.swift in Sources */,
 				FAAF4FB61986DE5E0001BFE1 /* SO_Answer.swift in Sources */,
 				FAAF4FB21986DE200001BFE1 /* SO_User.swift in Sources */,
+				FA4C874519899FC6009F69FC /* MasterTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

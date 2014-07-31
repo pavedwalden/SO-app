@@ -60,6 +60,8 @@ class NetworkController: NSObject {
         let task = session.dataTaskWithRequest(request, completionHandler: { (data : NSData!, response : NSURLResponse!, error :NSError!) -> Void in
             if error {
                 println("session error")
+                println(error.localizedDescription)
+                
             }
             else {
                 if let httpResponse = response as? NSHTTPURLResponse {
@@ -75,6 +77,37 @@ class NetworkController: NSObject {
                 var parsed : AnyObject = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: nil)
                 parsedJSON = parsed as NSDictionary
                 callback(items: (parsedJSON["items"] as NSArray))
+            }
+            })
+        task.resume()
+        
+    }
+    
+    func justWorkDamnit(callback: (text: String) -> Void) {
+        var url = NSURL()
+            url = NSURL(string:"https://www.google.com/")
+        
+        let request = NSURLRequest(URL: url)
+        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        var parsedJSON = [:]
+        let task = session.dataTaskWithRequest(request, completionHandler: { (data : NSData!, response : NSURLResponse!, error :NSError!) -> Void in
+            if error {
+                println("session error")
+                println(error.localizedDescription)
+            }
+            else {
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    switch httpResponse.statusCode {
+                    case 200:
+                        println("Response 200 - Winning")
+                    default:
+                        println("Status Code was:\(httpResponse.statusCode)")
+                    }
+                }
+                //                let responseJSON = NSString(data:data, encoding:NSUTF8StringEncoding)
+                //                println(responseJSON)
+                var text = NSString(data: data, encoding: NSUTF8StringEncoding)
+                callback(text: text)
             }
             })
         task.resume()
