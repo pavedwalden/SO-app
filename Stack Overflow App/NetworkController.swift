@@ -9,20 +9,12 @@
 import UIKit
 
 class NetworkController: NSObject {
-    func fetchJSONforItemType(itemtype: String, key: String, callback: (type: String, items: NSDictionary) -> Void) {
-        var url = NSURL()
-        switch itemtype {
-        case "User":
-            url = NSURL(string: "http://api.stackexchange.com/2.2/users/"+key+"?order=desc&sort=reputation&site=stackoverflow")
-        case "Answer":
-            url = NSURL(string: "http://api.stackexchange.com/2.2/answers/"+key+"?order=desc&sort=activity&site=stackoverflow")
-        case "Question":
-            url = NSURL(string: "http://api.stackexchange.com/2.2/questions/"+key+"?order=desc&sort=activity&site=stackoverflow")
-        case "Search":
-            url = NSURL(string: "http://api.stackexchange.com/2.2/search?order=desc&sort=activity&tagged="+key+"&site=stackoverflow")
-        default:
-            url = NSURL(string:"https://www.google.com/")
-        }
+    func fetchJSON(searchType: String, endpoint: String, callback: (type: String, items: NSDictionary) -> Void) {
+        println("Entering Network Controller")
+        println("Endpoint: \(endpoint)")
+        println("SearchType: \(searchType)")
+        
+        var url = NSURL(string: endpoint)
         
         let request = NSURLRequest(URL: url)
         let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
@@ -41,8 +33,7 @@ class NetworkController: NSObject {
                     }
                 }
                 var serialized : AnyObject = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: nil)
-                callback(type: "Search", items: serialized as NSDictionary)
-                //^^^FIX: hardcoded because I was having variable troubles
+                callback(type: searchType, items: serialized as NSDictionary)
             }
         })
         task.resume()

@@ -8,13 +8,26 @@
 
 import UIKit
 
-class MasterTableViewController: UIViewController, UITableViewDataSource {
+class MasterTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var masterTableView: UITableView!
+    
+    var menu = [ ["title":"Search By Keyword", "endpoint":"http://api.stackexchange.com/2.2/search?order=desc&sort=activity&site=stackoverflow&intitle="], ["title":"Search By Tag", "endpoint":"http://api.stackexchange.com/2.2/search?order=desc&sort=activity&site=stackoverflow&tagged="]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         println("master view controller loaded")
         masterTableView.dataSource = self
+
+        NSUserDefaults.standardUserDefaults().synchronize()
+        if let beenHere = NSUserDefaults.standardUserDefaults().valueForKey("newUser") as? Bool {
+            println("not a new user")
+        } else{
+            println("new user")
+            NSUserDefaults.standardUserDefaults().setBool(false, forKey: "newUser")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            println("Wrote to NSUserDefaults")
+        }
+
     }
 
     // MARK: - Table view data source
@@ -28,16 +41,23 @@ class MasterTableViewController: UIViewController, UITableViewDataSource {
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 1
+        return menu.count
     }
 
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell = tableView.dequeueReusableCellWithIdentifier("menuCell", forIndexPath: indexPath) as UITableViewCell
-
-        cell.textLabel.text = "By Tag"
+        let cell = tableView.dequeueReusableCellWithIdentifier("menuCell", forIndexPath: indexPath) as CustomTableViewCell
+        //cell.textLabel.text = "CRASH"
+        cell.textLabel.text = (menu[indexPath.row] as Dictionary )["title"]
+        //cell.textLabel.text = "By Tag"
 
         return cell
     }
-   
+    
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        let newVC = self.storyboard.instantiateViewControllerWithIdentifier("ResultsViewController") as ResultsViewController
+        newVC.endpoint = (menu[indexPath.row] as Dictionary )["endpoint"]
+        newVC.typeOfSearch = (menu[indexPath.row] as Dictionary )["title"]
+        self.splitViewController.showDetailViewController(newVC, sender: self)
+    }
 
 }

@@ -8,35 +8,43 @@
 
 import UIKit
 
-class ResultsViewController: UIViewController, UISearchBarDelegate,UITableViewDataSource {
-    @IBOutlet weak var searchBar: UISearchBar!
+class ResultsViewController: UIViewController, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var resultsTable: UITableView!
+    @IBOutlet weak var detailSearchBar: UISearchBar!
+    
     
     var endpoint : String?
-    //var items : NSArray = []
     var NC = NetworkController()
-    var results = ["Please Search For Something"]
-    
-//    func setItemsCallback(JSONitems: NSArray) -> Void {
-//        self.items = JSONitems
-//        self.resultsTable.reloadData()
-//    }
+    var results : [AnyObject] = [["title":"","link":""]]
+    var typeOfSearch : String?
     
     func parseByType(type: String, JSONreply: NSDictionary) -> Void {
+        println("Callback started")
         self.results = []
+        var returnItem : Dictionary<String, String> = [:]
         switch type {
-            case "Search":
+            case "Search By Keyword", "Search By Tag":
                 if let items = JSONreply["items"] as? NSArray {
                     for item in items{
                         if let nowItsADictionary = item as? NSDictionary {
                             if let title = nowItsADictionary["title"] as? String{
-                                self.results.append(title)
+                                //self.results.append(title)
+                                //returnItem.append(["title":title])
+                                returnItem["title"] = title
+                            }
+                            if let link = nowItsADictionary["link"] as? String{
+                                //self.results.append(link)
+                                //returnItem.append(["link":link])
+                                returnItem["link"] = link
                             }
                         }
+                        println("Now appending...")
+                        println(returnItem)
+                        self.results.append(returnItem)
                     }
                 }
             default:
-                results = ["Error: No Results Returned"]
+                results = [["title":"Error: No Results Returned","link":""]] as Array
         }
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             self.resultsTable.reloadData()
@@ -44,13 +52,28 @@ class ResultsViewController: UIViewController, UISearchBarDelegate,UITableViewDa
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
-        NC.fetchJSONforItemType("Search", key: searchBar.text,callback: parseByType)
+//        typeOfSearch = "debug"
+//        endpoint = "debug"
+        NC.fetchJSON(typeOfSearch!, endpoint: self.endpoint!+detailSearchBar.text, callback: parseByType)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         resultsTable.dataSource = self
-        searchBar.delegate = self
+        resultsTable.delegate = self
+        detailSearchBar.delegate = self
+        
+        if let test = endpoint {
+            println("endpoint set")
+        }else {
+            println("first screen")
+            self.results = [["title":""]]
+            detailSearchBar.frame.size.height = 0
+        }
+        
+        if let dbg = typeOfSearch {
+            println("Type of search set to: \(dbg)")
+        }
     }
 
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
@@ -58,19 +81,36 @@ class ResultsViewController: UIViewController, UISearchBarDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell = tableView.dequeueReusableCellWithIdentifier("resultCell", forIndexPath: indexPath) as UITableViewCell
-        
-        cell.textLabel.text = results[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("resultCell", forIndexPath: indexPath) as CustomTableViewCell
+//        var dictionary = results[indexPath.row] as Dictionary<String,String>
+//        var title = dictionary["title"]
+//        println(title)
+        println("Here's where we get into trouble.")
+        println("results.indexpath[row]")
+        println(results[indexPath.row])
+        var whatAmI = results[indexPath.row] as Dictionary<String, String>
+        println("What is this:")
+        println(whatAmI)
+        cell.textLabel.text = (results[indexPath.row] as Dictionary)["title"]
+        //var results : [AnyObject] = [["title":"","link":""]]
+        println(results)
+        if let dict = (results[indexPath.row] as? Dictionary<String, String>){
+            if let url = dict["title"] {
+                println("url = \(url)")
+                cell.link = url
+            }
+        }
+        //cell.link = (results[indexPath.row] as Dictionary)["link"]!
         
         return cell
     }
-
-    //
-    //    @IBAction func button(sender: AnyObject) {
-    //        //NC.fetchJSONforItemType("User", byId: "135152")
-    //        NC.fetchJSONforItemType("Question", byId: "1343344", callback: setItemsCallback)
-    //        //NC.fetchJSONforItemType("Answer", byId: "4101761")
-    //    }
+    
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        println("Did select row at index path")
+        let tehInternets = self.storyboard.instantiateViewControllerWithIdentifier("webViewController") as WebViewController
+        tehInternets.address = (results[indexPath.row] as Dictionary)["link"]
+        self.splitViewController.showDetailViewController(tehInternets, sender: self)
+    }
 
 }
 

@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" id="SKj-YH-1vb">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" id="SKj-YH-1vb" customClass="CustomTableViewCell" customModule="Stack_Overflow_App" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SKj-YH-1vb" id="IzI-aI-X4d">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -34,10 +34,43 @@
             </objects>
             <point key="canvasLocation" x="1108" y="1039"/>
         </scene>
+        <!--Web View Controller-->
+        <scene sceneID="TM3-6e-6IP">
+            <objects>
+                <viewController storyboardIdentifier="webViewController" id="RIp-iU-iGZ" customClass="WebViewController" customModule="Stack_Overflow_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vap-Aa-rqS"/>
+                        <viewControllerLayoutGuide type="bottom" id="oee-V5-vf0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eoV-u3-o0Q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ZQ-vD-KJv">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oee-V5-vf0" firstAttribute="top" secondItem="1ZQ-vD-KJv" secondAttribute="bottom" id="Hu4-DP-7I7"/>
+                            <constraint firstAttribute="trailing" secondItem="1ZQ-vD-KJv" secondAttribute="trailing" id="WmM-CC-ECf"/>
+                            <constraint firstItem="1ZQ-vD-KJv" firstAttribute="top" secondItem="eoV-u3-o0Q" secondAttribute="top" id="wwL-dr-lEu"/>
+                            <constraint firstItem="1ZQ-vD-KJv" firstAttribute="leading" secondItem="eoV-u3-o0Q" secondAttribute="leading" id="xae-U3-gIO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="1ZQ-vD-KJv" id="BMd-hB-RSe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tqc-lQ-yN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1108" y="1752"/>
+        </scene>
         <!--Results View Controller-->
         <scene sceneID="sLD-1O-WyO">
             <objects>
-                <viewController id="ewe-Cw-2lD" customClass="ResultsViewController" customModule="Stack_Overflow_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResultsViewController" id="ewe-Cw-2lD" customClass="ResultsViewController" customModule="Stack_Overflow_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2wO-Fb-qWz"/>
                         <viewControllerLayoutGuide type="bottom" id="asM-ci-x19"/>
@@ -55,7 +88,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="resultCell" id="hq9-Gc-Bce">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="resultCell" id="hq9-Gc-Bce" customClass="CustomTableViewCell" customModule="Stack_Overflow_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hq9-Gc-Bce" id="yLw-h6-gvl">
@@ -74,8 +107,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailSearchBar" destination="voh-K1-kls" id="ZPX-vX-ekD"/>
                         <outlet property="resultsTable" destination="pWl-on-4By" id="KIi-ct-enM"/>
-                        <outlet property="searchBar" destination="voh-K1-kls" id="hM8-oU-Oes"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mdf-Jy-XTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -104,7 +137,7 @@
                 <splitViewController id="Gr5-q4-5xL" sceneMemberID="viewController">
                     <connections>
                         <segue destination="dTd-S8-pt7" kind="relationship" relationship="masterViewController" id="ThG-L9-SKb"/>
-                        <segue destination="ewe-Cw-2lD" kind="relationship" relationship="detailViewController" id="d8U-Br-oBe"/>
+                        <segue destination="ewe-Cw-2lD" kind="relationship" relationship="detailViewController" id="aAs-b4-VvR"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J34-g6-eHM" userLabel="First Responder" sceneMemberID="firstResponder"/>
